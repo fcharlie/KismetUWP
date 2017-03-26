@@ -1,0 +1,48 @@
+﻿<Page
+    x:Class="KismetUWP.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:KismetUWP"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d" CanDrag="True">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="80"/>
+        </Grid.RowDefinitions>
+        <TextBox x:ConnectionId='1' Grid.Row="0"
+                 AllowDrop="True" AcceptsReturn="True"
+                 Name="hashsumcontent"/>
+        <CheckBox x:ConnectionId='2' Grid.Row="2" Margin="20,5" Height="30" Content="Uppercase"
+                   VerticalContentAlignment="Top"
+                  Name="casecheck"/>
+        <ComboBox x:ConnectionId='3' Grid.Row="2" Margin="0,25,350,0" Width="120"
+                  HorizontalAlignment="Right"
+                  VerticalContentAlignment="Top"
+                  Name="hashalgm">
+            <ComboBoxItem Content="MD5"/>
+            <ComboBoxItem Content="SHA1"/>
+            <ComboBoxItem Content="SHA1 - Coll"/>
+            <ComboBoxItem Content="SHA224"/>
+            <ComboBoxItem Content="SHA256"/>
+            <ComboBoxItem Content="SHA384"/>
+            <ComboBoxItem Content="SHA512"/>
+            <ComboBoxItem Content="SHA3 - 224"/>
+            <ComboBoxItem Content="SHA3 - 256" IsSelected="True"/>
+            <ComboBoxItem Content="SHA3 - 384"/>
+            <ComboBoxItem Content="SHA3 - 512"/>
+        </ComboBox>
+        <Button x:ConnectionId='4' Grid.Row="2"  Margin="0,0,190,0" Width="120"  Content="Clear"
+                                           
+                HorizontalAlignment="Right"
+                VerticalContentAlignment="Top" />
+        <Button x:ConnectionId='5' Grid.Row="2"  Margin="0,0,20,0" Width="120"  Content="Open" 
+                                            
+                HorizontalAlignment="Right"
+                VerticalContentAlignment="Top" />
+    </Grid>
+</Page>
+

@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tga;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="rhash">
+      <UniqueIdentifier>{64dbb6e2-1b3c-45a1-b60b-c807e84c03f3}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Hashsum.cpp" />
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="aich.c">
+      <Filter>rhash</Filter>
+    </ClCompile>
+    <ClCompile Include="algorithms.c">
+      <Filter>rhash</Filter>
+    </ClCompile>
+    <ClCompile Include="byte_order.c">
+      <Filter>rhash</Filter>
+    </ClCompile>
+    <ClCompile Include="crc32.c">
+      <Filter>rhash</Filter>
+    </ClCompile>
+    <ClCompile Include="ed2k.c">
+      <Filter>rhash</Filter>
+    </ClCompile>
+    <ClCompile Include="edonr.c">
+      <Filter>rhash</Filter>
+    </ClCompile>
+    <ClCompile Include="gost.c">
+      <Filter>rhash</Filter>
+    </ClCompile>
+    <ClCompile Include="has160.c">
+      <Filter>rhash</Filter>
+    </ClCompile>
+    <ClCompile Include="hex.c">
+      <Filter>rhash</Filter>
+    </ClCompile>
+    <ClCompile Include="md4.c">
+      <Filter>rhash</Filter>
+    </ClCompile>
+    <ClCompile Include="md5.c">
+      <Filter>rhash</Filter>
+    </ClCompile>
+    <ClCompile Include="plug_openssl.c">
+      <Filter>rhash</Filter>
+    </ClCompile>
+    <ClCompile Include="rhash.c">
+      <Filter>rhash</Filter>
+    </ClCompile>
+    <ClCompile Include="rhash_torrent.c">
+      <Filter>rhash</Filter>
+    </ClCompile>
+    <ClCompile Include="ripemd-160.c">
+      <Filter>rhash</Filter>
+    </ClCompile>
+    <ClCompile Include="sha1.c">
+      <Filter>rhash</Filter>
+    </ClCompile>
+    <ClCompile Include="sha1detectcoll.c">
+      <Filter>rhash</Filter>
+    </ClCompile>
+    <ClCompile Include="sha3.c">
+      <Filter>rhash</Filter>
+    </ClCompile>
+    <ClCompile Include="sha256.c">
+      <Filter>rhash</Filter>
+    </ClCompile>
+    <ClCompile Include="sha512.c">
+      <Filter>rhash</Filter>
+    </ClCompile>
+    <ClCompile Include="snefru.c">
+      <Filter>rhash</Filter>
+    </ClCompile>
+    <ClCompile Include="tiger.c">
+      <Filter>rhash</Filter>
+    </ClCompile>
+    <ClCompile Include="tiger_sbox.c">
+      <Filter>rhash</Filter>
+    </ClCompile>
+    <ClCompile Include="torrent.c">
+      <Filter>rhash</Filter>
+    </ClCompile>
+    <ClCompile Include="tth.c">
+      <Filter>rhash</Filter>
+    </ClCompile>
+    <ClCompile Include="ubc_check.c">
+      <Filter>rhash</Filter>
+    </ClCompile>
+    <ClCompile Include="util.c">
+      <Filter>rhash</Filter>
+    </ClCompile>
+    <ClCompile Include="whirlpool.c">
+      <Filter>rhash</Filter>
+    </ClCompile>
+    <ClCompile Include="whirlpool_sbox.c">
+      <Filter>rhash</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Hashsum.h" />
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="targetver.h" />
+  </ItemGroup>
+</Project>
