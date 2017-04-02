@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d" CanDrag="True">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid Background="#ffff00">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="20"/>
@@ -15,7 +15,7 @@
         </Grid.RowDefinitions>
         <TextBox Grid.Row="0"
                  AllowDrop="True" AcceptsReturn="True"
-                 Name="hashsumcontent"/>
+                 Name="hashsumcontent" IsReadOnly="True"/>
         <CheckBox Grid.Row="2" Margin="20,5" Height="30" Content="Uppercase"
                    VerticalContentAlignment="Top"
                   Name="casecheck"/>

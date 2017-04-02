@@ -52,7 +52,7 @@ void KismetUWP::MainPage::ProcessAsync()
 {
 	if (buffer->Length == 0) {
 		filesum->Final(false);
-		std::wstring message(L"File Name: ");
+		std::wstring message(L"Name: ");
 		message.append(currentFile).append(L"\r\nHash: ").append(filesum->Hash());
 		filesum.reset(); /// clear self
 		hashsumcontent->Text=ref new String(message.data());
@@ -157,5 +157,5 @@ void KismetUWP::MainPage::InvokeFileOpenPicker(Platform::Object^ sender, Windows
 
 void KismetUWP::MainPage::ClearFilesumContent(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
-
+	
 }
