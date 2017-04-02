@@ -52,8 +52,15 @@ void KismetUWP::MainPage::ProcessAsync()
 {
 	if (buffer->Length == 0) {
 		filesum->Final(false);
-		std::wstring message(L"Name: ");
-		message.append(currentFile).append(L"\r\nHash: ").append(filesum->Hash());
+		std::wstring message(L"Name:\t");
+		if (casecheck->IsChecked) {
+			std::wstring hash=filesum->Hash();
+			std::transform(hash.begin(), hash.end(), hash.begin(), toupper);
+			message.append(currentFile).append(L"\r\nHash:\t").append(hash);
+		}
+		else {
+			message.append(currentFile).append(L"\r\nHash:\t").append(filesum->Hash());
+		}
 		filesum.reset(); /// clear self
 		hashsumcontent->Text=ref new String(message.data());
 	}else {
