@@ -30,6 +30,9 @@ using namespace concurrency;
 MainPage::MainPage()
 {
 	InitializeComponent();
+	auto coreTitleBar = Windows::ApplicationModel::Core::CoreApplication::GetCurrentView()->TitleBar;
+	coreTitleBar->ExtendViewIntoTitleBar = true;
+	Window::Current->SetTitleBar(realTitle);
 }
 
 

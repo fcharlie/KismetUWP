@@ -5,21 +5,34 @@
     xmlns:local="using:KismetUWP"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d" CanDrag="True">
-
-    <Grid Background="#ffff00">
+    mc:Ignorable="d">
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
+            <RowDefinition Height="32"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="20"/>
             <RowDefinition Height="80"/>
         </Grid.RowDefinitions>
-        <TextBox Grid.Row="0"
-                 AllowDrop="True" AcceptsReturn="True"
+        <Button Grid.Row="0" BorderThickness="0" Background="White" Height="32" Width="48">
+            <TextBlock FontSize="14" FontFamily="Segoe MDL2 Assets" 
+                       Text="" 
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center">
+                
+            </TextBlock>
+        </Button>
+        <Grid x:Name="realTitle" Grid.Column="1">
+            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">
+                Kismet UWP
+            </TextBlock>
+        </Grid>
+        <TextBox Grid.Row="1"
+                 AllowDrop="True" AcceptsReturn="True" BorderThickness="0"
                  Name="hashsumcontent" IsReadOnly="True"/>
-        <CheckBox Grid.Row="2" Margin="20,5" Height="30" Content="Uppercase"
+        <CheckBox Grid.Row="3" Margin="20,5" Height="30" Content="Uppercase"
                    VerticalContentAlignment="Top"
                   Name="casecheck"/>
-        <ComboBox Grid.Row="2" Margin="0,25,350,0" Width="120"
+        <ComboBox Grid.Row="3" Margin="0,25,350,0" Width="120"
                   HorizontalAlignment="Right"
                   VerticalContentAlignment="Top"
                   Name="hashalgm">
@@ -35,11 +48,11 @@
             <ComboBoxItem Content="SHA3 - 384"/>
             <ComboBoxItem Content="SHA3 - 512"/>
         </ComboBox>
-        <Button Grid.Row="2"  Margin="0,0,190,0" Width="120"  Content="Clear"
+        <Button Grid.Row="3"  Margin="0,0,190,0" Width="120"  Content="Clear"
                 Click="ClearFilesumContent"
                 HorizontalAlignment="Right"
                 VerticalContentAlignment="Top" />
-        <Button Grid.Row="2"  Margin="0,0,20,0" Width="120"  Content="Open" 
+        <Button Grid.Row="3"  Margin="0,0,20,0" Width="120"  Content="Open" 
                 Click="InvokeFileOpenPicker"
                 HorizontalAlignment="Right"
                 VerticalContentAlignment="Top" />
