@@ -30,9 +30,10 @@ using namespace concurrency;
 MainPage::MainPage()
 {
 	InitializeComponent();
-	auto coreTitleBar = Windows::ApplicationModel::Core::CoreApplication::GetCurrentView()->TitleBar;
+	auto  coreTitleBar = Windows::ApplicationModel::Core::CoreApplication::GetCurrentView()->TitleBar;
 	coreTitleBar->ExtendViewIntoTitleBar = true;
 	Window::Current->SetTitleBar(realTitle);
+	progressBar = ref new ProgressBar();
 }
 
 
@@ -51,6 +52,39 @@ byte * KismetUWP::MainPage::GetPointerToPixelData(Windows::Storage::Streams::IBu
 	return pixels;
 }
 
+void KismetUWP::MainPage::CheckFilesum(Windows::Storage::StorageFile ^ file)
+{
+	if (nullptr == file)
+		return;
+	filesum.reset(new Filesum());
+	if (!InitializeSum()) {
+		auto messageDialog = ref new MessageDialog("Invalid Hash select");
+		// Show the message dialog
+		create_task(messageDialog->ShowAsync()).then([this](IUICommand^ command)
+		{
+
+		});
+		return;
+	}
+	rdsize = 0;
+	create_task(file->GetBasicPropertiesAsync()).then([this, file](FileProperties::BasicProperties^ basicProperties)
+	{
+		filesize = basicProperties->Size;
+		progressBar->IsEnabled = true;
+		currentFile = file->Name->Data();
+		create_task(file->OpenSequentialReadAsync()).then([this]
+		(Windows::Storage::Streams::IInputStream^ stream_)
+		{
+			//progressRing->IsActive = true;
+			stream = stream_;
+			create_task(stream->ReadAsync(buffer, 8192, Streams::InputStreamOptions::None)).then([this]
+			(Windows::Storage::Streams::IBuffer ^buf) {
+				this->ProcessAsync();
+			});
+		});
+	});
+}
+
 void KismetUWP::MainPage::ProcessAsync()
 {
 	if (buffer->Length == 0) {
@@ -65,6 +99,7 @@ void KismetUWP::MainPage::ProcessAsync()
 			message.append(currentFile).append(L"\r\nHash:\t").append(filesum->Hash());
 		}
 		filesum.reset(); /// clear self
+		//progressRing->IsActive = false;
 		hashsumcontent->Text=ref new String(message.data());
 	}else {
 		auto bt = GetPointerToPixelData(buffer, nullptr);
@@ -135,37 +170,14 @@ void KismetUWP::MainPage::InvokeFileOpenPicker(Platform::Object^ sender, Windows
 	create_task(picker->PickSingleFileAsync()).then([this]
 	(Windows::Storage::StorageFile^ file)
 	{
-		if (nullptr == file)
-			return;
-		filesum.reset(new Filesum());
-		if (!InitializeSum()) {
-			auto messageDialog = ref new MessageDialog("Invalid Hash select");
-			// Show the message dialog
-			create_task(messageDialog->ShowAsync()).then([this](IUICommand^ command)
-			{
-
-			});
-			return;
-		}
-		currentFile = file->Name->Data();
-		create_task(file->OpenSequentialReadAsync()).then([this]
-		(Windows::Storage::Streams::IInputStream^ stream_)
-		{
-			stream = stream_;
-			create_task(stream->ReadAsync(buffer, 8192, Streams::InputStreamOptions::None)).then([this]
-			(Windows::Storage::Streams::IBuffer ^buf) {
-				this->ProcessAsync();
-			});
-			//stream->ReadAsync()
-			OutputDebugString(L"1. End of OpenReadAsync lambda.\r\n");
-		});
-
-		OutputDebugString(L"2. End of PickSingleFileAysnc lambda.\r\n");
+		CheckFilesum(file);
 	});
 }
 
 
 void KismetUWP::MainPage::ClearFilesumContent(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
-	
+	if (!filesum) {
+		hashsumcontent->Text = "";
+	}
 }

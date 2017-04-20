@@ -18,12 +18,11 @@
                        Text="" 
                        VerticalAlignment="Center"
                        HorizontalAlignment="Center">
-                
             </TextBlock>
         </Button>
         <Grid x:Name="realTitle" Grid.Column="1">
             <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">
-                Kismet UWP
+                Kismet
             </TextBlock>
         </Grid>
         <TextBox Grid.Row="1"
