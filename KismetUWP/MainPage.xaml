@@ -22,19 +22,20 @@
         </Button>
         <Grid x:Name="realTitle" Grid.Column="1">
             <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">
-                Kismet
+                Kismet 💘 UWP
             </TextBlock>
         </Grid>
-        <TextBox Grid.Row="1"
+        <TextBox Grid.Row="1" Visibility="Collapsed" Margin="10,10"
+                 FontFamily="Segoe UI" FontSize="15"
                  AllowDrop="True" AcceptsReturn="True" BorderThickness="0"
                  Name="hashsumcontent" IsReadOnly="True"/>
-        <CheckBox Grid.Row="3" Margin="20,5" Height="30" Content="Uppercase"
+        <CheckBox Grid.Row="3" Margin="20,5" Height="30" Content="Uppercase" IsChecked="False"
                    VerticalContentAlignment="Top"
-                  Name="casecheck"/>
+                  x:Name="casecheck"/>
         <ComboBox Grid.Row="3" Margin="0,25,350,0" Width="120"
                   HorizontalAlignment="Right"
                   VerticalContentAlignment="Top"
-                  Name="hashalgm">
+                  x:Name="hashalgm">
             <ComboBoxItem Content="MD5"/>
             <ComboBoxItem Content="SHA1"/>
             <ComboBoxItem Content="SHA1 - Coll"/>

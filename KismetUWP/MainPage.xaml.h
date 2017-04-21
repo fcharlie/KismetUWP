@@ -22,7 +22,6 @@ namespace KismetUWP
 
 	private:
 		std::wstring currentFile;
-		ProgressBar ^progressBar;
 		std::shared_ptr<Filesum> filesum;
 		Windows::Storage::Streams::IBuffer ^buffer;
 		Windows::Storage::Streams::IInputStream^ stream;

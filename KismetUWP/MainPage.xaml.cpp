@@ -27,13 +27,14 @@ using namespace Microsoft::WRL;
 using namespace concurrency;
 //“空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409 上有介绍
 
+//🌂🌃🌄🌅🌆🌇🌈🌉🌊🌋🌍🌎🌏🌒🌓🌔🌕🌖🌗🌘🌝🌞🌱🌲🌳🌴🌷🌹🌻🌽🌾🍅🍆🍇🍈🍉🍌🍍🍎🍏🍐🍑🍒🍓🍔🍕🍖🍗🍘🍛🍜🍝🍟🍠🍡🍢🍣🍤🍥🍦🍧🍨🍩🍪🍫🍬🍭🍮🍯🍰🍱🍲🍳🍵🍹🍺🍻🍼🎂🎃🎄🎅🎆🎇🎉🎊🎋🎌🎍🎎🎐🎑🎓🎠🎡🎢🎣🎤🎦🎨🎯🎰🎱🎳🎴🎻🎼🎾🎿🏀🏁🏂🏄🏇🏊🏡🏤🏦🏧🏩🏫🏬🐌🐓🐝🐠🐡🐢🐣🐳🐵🐶🐸🐹👆👇👈👉👊👒👔👛👝👦👧👨👩👮👯👰👱👲👳👴👵👶👷👸👹👺👼👾💂💄💅💆💇💈💉💊💋💌💐💑💒💘💝💟💨💩💱💹💺💾📈📉📊📌📍📑📓📔📛📝📟📣📵🔞🔫😁😂😃😄😅😆😇😈😉😊😋😌😍😎😏😐😒😓😔😖😘😚😜😝😞😠😡😢😣😤😥😨😩😪😫😭😰😱😲😳😵😶😷🙅🙆🙇🙈🙉🙊🙋🙌🙍🙎🙏🚀🚃🚄🚅🚆🚈🚉🚊🚋🚌🚍🚎🚏🚐
+
 MainPage::MainPage()
 {
 	InitializeComponent();
 	auto  coreTitleBar = Windows::ApplicationModel::Core::CoreApplication::GetCurrentView()->TitleBar;
 	coreTitleBar->ExtendViewIntoTitleBar = true;
 	Window::Current->SetTitleBar(realTitle);
-	progressBar = ref new ProgressBar();
 }
 
 
@@ -70,7 +71,6 @@ void KismetUWP::MainPage::CheckFilesum(Windows::Storage::StorageFile ^ file)
 	create_task(file->GetBasicPropertiesAsync()).then([this, file](FileProperties::BasicProperties^ basicProperties)
 	{
 		filesize = basicProperties->Size;
-		progressBar->IsEnabled = true;
 		currentFile = file->Name->Data();
 		create_task(file->OpenSequentialReadAsync()).then([this]
 		(Windows::Storage::Streams::IInputStream^ stream_)
@@ -90,7 +90,7 @@ void KismetUWP::MainPage::ProcessAsync()
 	if (buffer->Length == 0) {
 		filesum->Final(false);
 		std::wstring message(L"Name:\t");
-		if (casecheck->IsChecked) {
+		if (casecheck->IsChecked->Equals(true)) {
 			std::wstring hash=filesum->Hash();
 			std::transform(hash.begin(), hash.end(), hash.begin(), toupper);
 			message.append(currentFile).append(L"\r\nHash:\t").append(hash);
@@ -99,8 +99,10 @@ void KismetUWP::MainPage::ProcessAsync()
 			message.append(currentFile).append(L"\r\nHash:\t").append(filesum->Hash());
 		}
 		filesum.reset(); /// clear self
-		//progressRing->IsActive = false;
 		hashsumcontent->Text=ref new String(message.data());
+		if (hashsumcontent->Visibility == Windows::UI::Xaml::Visibility::Collapsed) {
+			hashsumcontent->Visibility = Windows::UI::Xaml::Visibility::Visible;
+		}
 	}else {
 		auto bt = GetPointerToPixelData(buffer, nullptr);
 		if (bt) {

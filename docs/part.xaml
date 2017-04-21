@@ -1,0 +1,16 @@
+        <Grid Background="Black" Grid.Row="1">
+            <Grid>
+                <TextBlock Margin="35" FontSize="20" Foreground="White"  HorizontalAlignment="Center" FontFamily="Microsoft YaHei">Çë×øºÍ·Å¿í</TextBlock>
+                <Grid Height="200" Width="200" >
+                    <Ellipse Stroke="Gray" StrokeThickness="3"></Ellipse>
+                    <Ellipse Stroke="DeepSkyBlue" StrokeThickness="3" 
+                         StrokeDashArray="61.89, 1000"
+                         RenderTransformOrigin="0.5, 0.5">
+                        <Ellipse.RenderTransform>
+                            <RotateTransform Angle="-90" />
+                        </Ellipse.RenderTransform>
+                    </Ellipse>
+                    <TextBlock FontSize="50" FontFamily="Microsoft YaHei" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White">30%</TextBlock>
+                </Grid>
+            </Grid>
+        </Grid>
