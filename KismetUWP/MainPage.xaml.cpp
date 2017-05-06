@@ -48,13 +48,17 @@ void KismetUWP::MainPage::UpdateUiWindowState(UiWindowState state)
 	case kWindowNone:
 		droppanel->Visibility = Windows::UI::Xaml::Visibility::Visible;
 		showpanel->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
+		progresspanel->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
 		break;
 	case kWindowProgress:
+		progresspanel->Visibility = Windows::UI::Xaml::Visibility::Visible;
 		droppanel->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
+		showpanel->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
 		break;
 	case kWindowShow:
-		droppanel->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
 		showpanel->Visibility = Windows::UI::Xaml::Visibility::Visible;
+		droppanel->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
+		progresspanel->Visibility = Windows::UI::Xaml::Visibility::Collapsed;
 		break;
 	default:
 		break;
@@ -127,6 +131,7 @@ void KismetUWP::MainPage::CheckFilesum(Windows::Storage::StorageFile ^ file)
 	create_task(file->GetBasicPropertiesAsync()).then([this, file](FileProperties::BasicProperties^ basicProperties)
 	{
 		filesize = basicProperties->Size;
+		progressbar->Maximum = (double)filesize;
 		currentFile = file->Path->Data();
 		create_task(file->OpenSequentialReadAsync()).then([this]
 		(Windows::Storage::Streams::IInputStream^ stream_)
@@ -143,6 +148,10 @@ void KismetUWP::MainPage::CheckFilesum(Windows::Storage::StorageFile ^ file)
 
 void KismetUWP::MainPage::ProcessAsync()
 {
+	progressbar->Value = (double)rdsize;
+	wchar_t buf[20];
+	_snwprintf_s(buf, sizeof(buf), L"%0.2f%%", 100 * (double)rdsize / filesize);
+	progresstb->Text = ref new String(buf);
 	if (buffer->Length == 0) {
 		UpdateUiWindowState(kWindowShow);
 		filesum->Final(casecheck->IsChecked->Equals(true));
@@ -153,6 +162,7 @@ void KismetUWP::MainPage::ProcessAsync()
 		hnblock->Text = ref new String(h.data());
 		filesum.reset(); /// clear self
 	}else {
+		rdsize += buffer->Length;
 		auto bt = GetPointerToPixelData(buffer, nullptr);
 		if (bt) {
 			filesum->Update((const char*)bt, buffer->Length);

@@ -25,7 +25,7 @@
             </TextBlock>
         </Grid>
         <RelativePanel Grid.Row="1"
-                       Name="droppanel"
+                       x:Name="droppanel"
                        Width="200" Height="200" 
                        HorizontalAlignment="Center" 
                        VerticalAlignment="Center"
@@ -44,19 +44,35 @@
                 FontFamily="Segoe MDL2 Assets" FontSize="64" Text="" 
                 RelativePanel.AlignHorizontalCenterWithPanel="True"
                 RelativePanel.AlignVerticalCenterWithPanel="True"
-                Foreground="Red">
+                Foreground="Tomato">
             </TextBlock>
         </RelativePanel>
-
+        <RelativePanel Grid.Row="1"
+                       x:Name="progresspanel" 
+                       Width="400" Height="400"
+                       HorizontalAlignment="Center" 
+                       VerticalAlignment="Center"
+                       Visibility="Collapsed">
+            <TextBlock x:Name="progresstb"
+                       Foreground="Crimson"
+                       RelativePanel.AlignVerticalCenterWithPanel="True"
+                       RelativePanel.AlignHorizontalCenterWithPanel="True"></TextBlock>
+            <ProgressBar x:Name="progressbar" 
+                         Margin="0,20"
+                         Foreground="Crimson"
+                         RelativePanel.Below="progresstb" 
+                         RelativePanel.AlignLeftWithPanel="True"
+                         RelativePanel.AlignRightWithPanel="True"></ProgressBar>
+        </RelativePanel>
         <!--About Progress Aera -->
         <!--About Show Context-->
         <RelativePanel Grid.Row="1" 
-                       Name="showpanel" 
+                       x:Name="showpanel" 
                        Padding="20"
                        Visibility="Collapsed" Margin="30">
             <TextBlock Text="File" FontSize="16"
-                       Name="fnblock" Height="30"/>
-            <TextBox Name="filenametext" FontSize="16" 
+                       x:Name="fnblock" Height="30"/>
+            <TextBox x:Name="filenametext" FontSize="16" 
                      Height="30" 
                      Margin="0,5"
                      RelativePanel.Below="fnblock" 
@@ -65,7 +81,7 @@
                      IsReadOnly="True" />
             <TextBlock Name="hnblock" FontSize="16" 
                        RelativePanel.Below="filenametext" Height="30" />
-            <TextBox Name="hashsumcontent" 
+            <TextBox x:Name="hashsumcontent" 
                      FontSize="16"
                      Margin="0,5"
                      RelativePanel.Below="hnblock" 
