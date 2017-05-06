@@ -32,6 +32,9 @@ public:
 		(void)width;
 		rhash_md5_init(&ctx);
 	}
+	const wchar_t *Name() {
+		return L"MD5";
+	}
 	void Update(const unsigned char *buf, size_t len) {
 		rhash_md5_update(&ctx, buf, len);
 	}
@@ -56,6 +59,9 @@ public:
 	void Update(const unsigned char *buf, size_t len) {
 		rhash_sha1_update(&ctx, buf, len);
 	}
+	const wchar_t *Name() {
+		return L"SHA1";
+	}
 	void Final(bool ucase,std::wstring &hash) {
 		unsigned char buf[sha1_hash_size];
 		rhash_sha1_final(&ctx, buf);
@@ -76,6 +82,9 @@ public:
 	}
 	void Update(const unsigned char *buf, size_t len) {
 		SHA1DCUpdate(&ctx, (const char*)buf, len);
+	}
+	const wchar_t *Name() {
+		return L"SHA1DC";
 	}
 	void Final(bool ucase,std::wstring &hash) {
 		unsigned char buf[sha1_hash_size];
@@ -104,6 +113,9 @@ public:
 	void Update(const unsigned char *buf, size_t len) {
 		rhash_sha256_update(&ctx, buf, len);
 	}
+	const wchar_t *Name() {
+		return L"SHA2";
+	}
 	void Final(bool ucase, std::wstring &hash) {
 		unsigned char buf[sha256_hash_size];
 		rhash_sha256_final(&ctx, buf);
@@ -128,6 +140,9 @@ public:
 	}
 	void Update(const unsigned char *buf, size_t len) {
 		rhash_sha512_update(&ctx, buf, len);
+	}
+	const wchar_t *Name() {
+		return L"SHA2";
 	}
 	void Final(bool ucase, std::wstring &hash) {
 		unsigned char buf[sha512_hash_size];
@@ -166,6 +181,9 @@ public:
 	}
 	void Update(const unsigned char *buf, size_t len) {
 		rhash_sha3_update(&ctx, buf, len);
+	}
+	const wchar_t *Name() {
+		return L"SHA3";
 	}
 	void Final(bool ucase, std::wstring &hash) {
 		unsigned char buf[sha3_512_hash_size];

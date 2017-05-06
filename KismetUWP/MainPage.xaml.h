@@ -12,6 +12,11 @@ using namespace Windows::UI::Xaml::Controls;
 
 namespace KismetUWP
 {
+	enum UiWindowState {
+		kWindowNone,
+		kWindowProgress,
+		kWindowShow
+	};
 	/// <summary>
 	/// 可用于自身或导航至 Frame 内部的空白页。
 	/// </summary>
@@ -21,6 +26,7 @@ namespace KismetUWP
 		MainPage();
 
 	private:
+		void UpdateUiWindowState(UiWindowState state);
 		std::wstring currentFile;
 		std::shared_ptr<Filesum> filesum;
 		Windows::Storage::Streams::IBuffer ^buffer;
@@ -29,9 +35,12 @@ namespace KismetUWP
 		int64_t rdsize = 0;
 		void ProcessAsync();
 		bool InitializeSum();
+		void InitializeFrostedGlass(UIElement^ glassHost);
 		byte* GetPointerToPixelData(Windows::Storage::Streams::IBuffer^ pixelBuffer, unsigned int *length);
 		void CheckFilesum(Windows::Storage::StorageFile^ file);
 		void InvokeFileOpenPicker(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
 		void ClearFilesumContent(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
+		void OnDragOver(Platform::Object^ sender, Windows::UI::Xaml::DragEventArgs^ e);
+		void OnDrop(Platform::Object^ sender, Windows::UI::Xaml::DragEventArgs^ e);
 	};
 }
