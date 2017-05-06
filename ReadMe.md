@@ -1,6 +1,7 @@
 # KismetUWP
 
-![beta-image](./docs/images/beta-20170402.png)
+![NONE](./docs/images/none.png)
 
+![Hash](./docs/images/hash.png)
 
 WORKING IN PROGRESS
