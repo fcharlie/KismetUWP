@@ -17,7 +17,7 @@
 
 #if !(__GNUC__ >= 4 || (__GNUC__ ==3 && __GNUC_MINOR__ >= 4)) /* if !GCC or GCC < 4.3 */
 
-#  if _MSC_VER >= 1300 && (_M_IX86 || _M_AMD64 || _M_IA64) /* if MSVC++ >= 2002 on x86/x64 */
+#  if _MSC_VER >= 1300 && (_M_IX86 || _M_AMD64 || _M_IA64||_M_ARM_NT) /* if MSVC++ >= 2002 on x86/x64 */
 #  include <intrin.h>
 #  pragma intrinsic(_BitScanForward)
 
