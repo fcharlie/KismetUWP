@@ -35,7 +35,6 @@ namespace KismetUWP
 		int64_t rdsize = 0;
 		void ProcessAsync();
 		bool InitializeSum();
-		void InitializeFrostedGlass(UIElement^ glassHost);
 		byte* GetPointerToPixelData(Windows::Storage::Streams::IBuffer^ pixelBuffer, unsigned int *length);
 		void CheckFilesum(Windows::Storage::StorageFile^ file);
 		void InvokeFileOpenPicker(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);

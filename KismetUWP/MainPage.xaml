@@ -5,14 +5,15 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
-    <Grid x:Name="GlassHost" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid x:Name="GlassHost" Background="{ThemeResource SystemControlBaseLowAcrylicWindowBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="32"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="20"/>
             <RowDefinition Height="80"/>
         </Grid.RowDefinitions>
-        <Button Grid.Row="0" BorderThickness="0" Background="White" Height="32" Width="48">
+        <Button Grid.Row="0" BorderThickness="0" Height="32" Width="48" 
+                Background="{StaticResource SystemControlBaseLowAcrylicWindowBrush}">
             <TextBlock FontSize="14" FontFamily="Segoe MDL2 Assets" 
                        Text="" 
                        VerticalAlignment="Center"
@@ -32,7 +33,7 @@
                        AllowDrop="True" 
                        Drop="OnDrop" 
                        DragOver="OnDragOver" Visibility="Visible" >
-            <Ellipse Fill="{StaticResource ApplicationPageBackgroundThemeBrush}" 
+            <Ellipse Fill="{StaticResource SystemControlBaseLowAcrylicWindowBrush}" 
                      RelativePanel.AlignBottomWithPanel="True"
                      RelativePanel.AlignLeftWithPanel="True"
                      RelativePanel.AlignTopWithPanel="True"

@@ -29,17 +29,18 @@ using namespace Windows::Storage::Pickers;
 using namespace Windows::ApplicationModel::DataTransfer;
 using namespace Microsoft::WRL;
 using namespace concurrency;
-//“空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409 上有介绍
 
-//🌂🌃🌄🌅🌆🌇🌈🌉🌊🌋🌍🌎🌏🌒🌓🌔🌕🌖🌗🌘🌝🌞🌱🌲🌳🌴🌷🌹🌻🌽🌾🍅🍆🍇🍈🍉🍌🍍🍎🍏🍐🍑🍒🍓🍔🍕🍖🍗🍘🍛🍜🍝🍟🍠🍡🍢🍣🍤🍥🍦🍧🍨🍩🍪🍫🍬🍭🍮🍯🍰🍱🍲🍳🍵🍹🍺🍻🍼🎂🎃🎄🎅🎆🎇🎉🎊🎋🎌🎍🎎🎐🎑🎓🎠🎡🎢🎣🎤🎦🎨🎯🎰🎱🎳🎴🎻🎼🎾🎿🏀🏁🏂🏄🏇🏊🏡🏤🏦🏧🏩🏫🏬🐌🐓🐝🐠🐡🐢🐣🐳🐵🐶🐸🐹👆👇👈👉👊👒👔👛👝👦👧👨👩👮👯👰👱👲👳👴👵👶👷👸👹👺👼👾💂💄💅💆💇💈💉💊💋💌💐💑💒💘💝💟💨💩💱💹💺💾📈📉📊📌📍📑📓📔📛📝📟📣📵🔞🔫😁😂😃😄😅😆😇😈😉😊😋😌😍😎😏😐😒😓😔😖😘😚😜😝😞😠😡😢😣😤😥😨😩😪😫😭😰😱😲😳😵😶😷🙅🙆🙇🙈🙉🙊🙋🙌🙍🙎🙏🚀🚃🚄🚅🚆🚈🚉🚊🚋🚌🚍🚎🚏🚐
 
 MainPage::MainPage()
 {
 	InitializeComponent();
-	auto  coreTitleBar = Windows::ApplicationModel::Core::CoreApplication::GetCurrentView()->TitleBar;
-	coreTitleBar->ExtendViewIntoTitleBar = true;
+
+	Windows::ApplicationModel::Core::CoreApplication::GetCurrentView()->TitleBar->ExtendViewIntoTitleBar=true;
+	auto coreTitleBar = Windows::UI::ViewManagement::ApplicationView::GetForCurrentView()->TitleBar;
+	coreTitleBar->ButtonBackgroundColor =Windows::UI::Colors::Transparent;
+	coreTitleBar->ButtonInactiveBackgroundColor = Windows::UI::Colors::Transparent;
 	Window::Current->SetTitleBar(realTitle);
-	//InitializeFrostedGlass(GlassHost);
+
 }
 
 void KismetUWP::MainPage::UpdateUiWindowState(UiWindowState state)
@@ -64,36 +65,6 @@ void KismetUWP::MainPage::UpdateUiWindowState(UiWindowState state)
 		break;
 	}
 }
-
-void KismetUWP::MainPage::InitializeFrostedGlass(UIElement ^ glassHost)
-{
-	Visual ^hostVisual = ElementCompositionPreview::GetElementVisual(glassHost);
-	Compositor ^compositor = hostVisual->Compositor;
-	auto glassEffect = ref new GaussianBlurEffect();
-	glassEffect->BlurAmount = 15.0f;
-	glassEffect->BorderMode = EffectBorderMode::Hard;
-	auto s1 = ref new CompositionEffectSourceParameter("backdropBrush");
-	auto s2 = ref new ColorSourceEffect();
-	s2->Color = Windows::UI::ColorHelper::FromArgb(255, 245, 245, 245);
-	auto s= ref new ArithmeticCompositeEffect();
-	s->MultiplyAmount = 0;
-	s->Source1Amount = 0.5f;
-	s->Source2Amount = 0.5f;
-	s->Source1 = s1;
-	s->Source2 = s2;
-	glassEffect->Source = s;
-	auto effectFactory = compositor->CreateEffectFactory(glassEffect);
-	auto backdropBrush = compositor->CreateBackdropBrush();
-	auto effectBrush = effectFactory->CreateBrush();
-	effectBrush->SetSourceParameter("backdropBrush", backdropBrush);
-	auto glassVisual = compositor->CreateSpriteVisual();
-	glassVisual->Brush = effectBrush;
-	ElementCompositionPreview::SetElementChildVisual(glassHost,glassVisual);
-	auto bindSizeAnimation = compositor->CreateExpressionAnimation("hostVisual.Size");
-	bindSizeAnimation->SetReferenceParameter("hostVisual", hostVisual);
-	glassVisual->StartAnimation("Size", bindSizeAnimation);
-}
-
 
 byte * KismetUWP::MainPage::GetPointerToPixelData(Windows::Storage::Streams::IBuffer ^ pixelBuffer, unsigned int * length)
 {
@@ -238,7 +209,7 @@ void KismetUWP::MainPage::ClearFilesumContent(Platform::Object^ sender, Windows:
 {
 	UpdateUiWindowState(kWindowNone);
 	if (!filesum) {
-		hashsumcontent->Text = "";
+		hashsumcontent->Text = L"";
 	}
 }
 
