@@ -53,7 +53,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="KismetUWP_TemporaryKey.pfx" />
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="MainPage.xaml" />

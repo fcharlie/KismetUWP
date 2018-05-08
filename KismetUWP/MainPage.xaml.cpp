@@ -22,7 +22,6 @@ using namespace Windows::UI::Xaml::Data;
 using namespace Windows::UI::Xaml::Input;
 using namespace Windows::UI::Xaml::Media;
 using namespace Windows::UI::Xaml::Navigation;
-using namespace Microsoft::Graphics::Canvas::Effects;
 using namespace Windows::Storage;
 using namespace Windows::Storage::Streams;
 using namespace Windows::Storage::Pickers;
