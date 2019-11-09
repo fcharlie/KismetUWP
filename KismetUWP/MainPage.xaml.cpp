@@ -34,9 +34,9 @@ MainPage::MainPage()
 {
 	InitializeComponent();
 
-	Windows::ApplicationModel::Core::CoreApplication::GetCurrentView()->TitleBar->ExtendViewIntoTitleBar=true;
+	Windows::ApplicationModel::Core::CoreApplication::GetCurrentView()->TitleBar->ExtendViewIntoTitleBar = true;
 	auto coreTitleBar = Windows::UI::ViewManagement::ApplicationView::GetForCurrentView()->TitleBar;
-	coreTitleBar->ButtonBackgroundColor =Windows::UI::Colors::Transparent;
+	coreTitleBar->ButtonBackgroundColor = Windows::UI::Colors::Transparent;
 	coreTitleBar->ButtonInactiveBackgroundColor = Windows::UI::Colors::Transparent;
 	Window::Current->SetTitleBar(realTitle);
 
@@ -65,7 +65,7 @@ void KismetUWP::MainPage::UpdateUiWindowState(UiWindowState state)
 	}
 }
 
-byte * KismetUWP::MainPage::GetPointerToPixelData(Windows::Storage::Streams::IBuffer ^ pixelBuffer, unsigned int * length)
+byte* KismetUWP::MainPage::GetPointerToPixelData(Windows::Storage::Streams::IBuffer^ pixelBuffer, unsigned int* length)
 {
 	Object^ obj = pixelBuffer;
 	ComPtr<IInspectable> insp(reinterpret_cast<IInspectable*>(obj));
@@ -80,40 +80,44 @@ byte * KismetUWP::MainPage::GetPointerToPixelData(Windows::Storage::Streams::IBu
 	return pixels;
 }
 
-void KismetUWP::MainPage::CheckFilesum(Windows::Storage::StorageFile ^ file)
+void KismetUWP::MainPage::CheckFilesum(Windows::Storage::StorageFile^ file)
 {
 	if (nullptr == file)
+	{
 		return;
+	}
 	if (buffer == nullptr)
+	{
 		buffer = ref new Buffer(8912);
+	}
 	filesum.reset(new Filesum());
 	if (!InitializeSum()) {
 		auto messageDialog = ref new MessageDialog("Invalid Hash select");
 		// Show the message dialog
 		create_task(messageDialog->ShowAsync()).then([this](IUICommand^ command)
-		{
+			{
 
-		});
+			});
 		return;
 	}
 	UpdateUiWindowState(kWindowProgress);
 	rdsize = 0;
 	create_task(file->GetBasicPropertiesAsync()).then([this, file](FileProperties::BasicProperties^ basicProperties)
-	{
-		filesize = basicProperties->Size;
-		progressbar->Maximum = (double)filesize;
-		currentFile = file->Path->Data();
-		create_task(file->OpenSequentialReadAsync()).then([this]
-		(Windows::Storage::Streams::IInputStream^ stream_)
 		{
-			//progressRing->IsActive = true;
-			stream = stream_;
-			create_task(stream->ReadAsync(buffer, 8192, Streams::InputStreamOptions::None)).then([this]
-			(Windows::Storage::Streams::IBuffer ^buf) {
-				this->ProcessAsync();
-			});
+			filesize = basicProperties->Size;
+			progressbar->Maximum = (double)filesize;
+			currentFile = file->Path->Data();
+			create_task(file->OpenSequentialReadAsync()).then([this]
+			(Windows::Storage::Streams::IInputStream^ stream_)
+				{
+					//progressRing->IsActive = true;
+					stream = stream_;
+					create_task(stream->ReadAsync(buffer, 8192, Streams::InputStreamOptions::None)).then([this]
+					(Windows::Storage::Streams::IBuffer^ buf) {
+							this->ProcessAsync();
+						});
+				});
 		});
-	});
 }
 
 void KismetUWP::MainPage::ProcessAsync()
@@ -131,16 +135,17 @@ void KismetUWP::MainPage::ProcessAsync()
 		h.append(filesum->Name()).push_back(')');
 		hnblock->Text = ref new String(h.data());
 		filesum.reset(); /// clear self
-	}else {
+	}
+	else {
 		rdsize += buffer->Length;
 		auto bt = GetPointerToPixelData(buffer, nullptr);
 		if (bt) {
 			filesum->Update((const char*)bt, buffer->Length);
 		}
 		create_task(stream->ReadAsync(buffer, 8192, Streams::InputStreamOptions::None)).then([this]
-		(Windows::Storage::Streams::IBuffer ^buf) {
-			this->ProcessAsync();
-		});
+		(Windows::Storage::Streams::IBuffer^ buf) {
+				this->ProcessAsync();
+			});
 	}
 }
 
@@ -198,9 +203,9 @@ void KismetUWP::MainPage::InvokeFileOpenPicker(Platform::Object^ sender, Windows
 	picker->FileTypeFilter->Append("*");
 	create_task(picker->PickSingleFileAsync()).then([this]
 	(Windows::Storage::StorageFile^ file)
-	{
-		CheckFilesum(file);
-	});
+		{
+			CheckFilesum(file);
+		});
 }
 
 
@@ -225,16 +230,16 @@ void KismetUWP::MainPage::OnDrop(Platform::Object^ sender, Windows::UI::Xaml::Dr
 	auto def = e->GetDeferral();
 	auto dv = e->DataView;
 	if (dv->Contains(StandardDataFormats::StorageItems)) {
-		create_task(dv->GetStorageItemsAsync()).then([this,def,dv](IVectorView<IStorageItem^> ^items) {
+		create_task(dv->GetStorageItemsAsync()).then([this, def, dv](IVectorView<IStorageItem^>^ items) {
 			if (items->Size > 0) {
 				auto item = items->GetAt(0);
 				if (item->IsOfType(StorageItemTypes::File)) {
-					CheckFilesum((StorageFile ^)item);
+					CheckFilesum((StorageFile^)item);
 				}
 			}
 			VisualStateManager::GoToState(this, "Generic", false);
 			def->Complete();
-		});
+			});
 	}
 }
 
